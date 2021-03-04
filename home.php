@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html class="no-js" lang="en">
+
 
 <?php include 'head.php'; ?>
 
 <body>
     <div class="scroll-progress primary-bg"></div>
-    <!-- Start Preloader -->
-    <!-- <div class="preloader text-center">
-        <div class="circle"></div>
-    </div> -->
+   
    
 <?php include 'aside-right.php'; ?>
 <?php include 'header.php'; ?>
@@ -17,21 +13,17 @@
    
     
     <main>
-        <div class="featured-1">
+        <div class="featured-1" style="background:white">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-6 align-self-center">
-                        <p class="text-muted"><span class="typewrite d-inline" data-period="2000" data-type='[ " Travel Blogger. ", "Content Writter. ", "Food Guides " ]'></span></p>
-                        <h2>Hello, I’m <span>Steven</span></h2>
-                        <h3 class="mb-20"> Welcome to my blog</h3>
-                        <h5 class="text-muted">Don't miss out on the latest news about Travel tips, Hotels review, Food guide...</h5>
-                        <form class="input-group form-subcriber mt-30 d-flex">
-                            <input type="email" class="form-control bg-white font-small" placeholder="Enter your email">
-                            <button class="btn bg-primary text-white" type="submit">Subscribe</button>
-                        </form>
-                    </div>
-                    <div class="col-lg-6 text-right d-none d-lg-block">
-                        <img src="assets/imgs/authors/featured.png" alt="">
+                    <div class="col-lg-12 align-self-center">
+                    <?php 
+                        $sql = runQuery("SELECT * FROM dbanner WHERE dpost='Home'");
+                        if($sql->num_rows>0){
+                            $img = fetchAssoc($sql);
+                     ?>
+                         <a href="<?php echo $img['durl']; ?>"><img src="banner/<?php echo $img['dimg']; ?>" alt=""></a>  
+                        <?php } ?>                   
                     </div>
                 </div>
             </div>
@@ -61,6 +53,7 @@
                         <div class="carausel-post-1 hover-up border-radius-10 overflow-hidden transition-normal position-relative wow fadeInUp animated">
                             <div class="arrow-cover"></div>
                             <div class="slide-fade">
+
                                 <div class="position-relative post-thumb">
                                     <div class="thumb-overlay img-hover-slide position-relative" style="background-image: url(assets/imgs/news/news-4.jpg)">
                                         <a class="img-link" href="single.html"></a>
@@ -80,6 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="position-relative post-thumb">
                                     <div class="thumb-overlay img-hover-slide position-relative" style="background-image: url(assets/imgs/news/news-6.jpg)">
                                         <a class="img-link" href="single.html"></a>
@@ -98,6 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
