@@ -23,10 +23,10 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         $himg = clean($_POST['himg']);
         if(!empty($_FILES['img']['name'])){ 
             insertImages($transid, $bi);
-        }
-        $sql = runQuery("UPDATE dbanner SET dpost='$post', durl='$url' WHERE bid='$id'");
-        if($sql){
             @unlink("../banner/$himg.jpg");
+        }
+        $sql = runQuery("UPDATE dbanner SET durl='$url' WHERE bid='$bi'");
+        if($sql){
             $_SESSION['msgs']="Updated successfully";
         }else{
             $_SESSION['msg']="Oops! try again later";

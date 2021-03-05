@@ -25,14 +25,14 @@
                         <li>
                             <a class="waves-effect waves-dark" href="update_banner" aria-expanded="false">
                                 <i class="mdi mdi-baby text-success"></i>
-                                <span class="hide-menu"> Update Banner</span>
+                                <span class="hide-menu"> Manage Banners</span>
                             </a>
                         </li>
 
                         <li>
                             <a class="waves-effect waves-dark" href="posts" aria-expanded="false">
                                 <i class="mdi mdi-baby text-success"></i>
-                                <span class="hide-menu"> Manage Post</span>
+                                <span class="hide-menu"> Manage Posts</span>
                             </a>
                         </li>
                         
@@ -133,14 +133,21 @@
                             </a>
                         </li>
 
+                        
+                         -->
                         <li>
                             <a class="waves-effect waves-dark" href="manage-categories" aria-expanded="false">
                                 <i class="mdi mdi-baby text-success"></i>
-                                <span class="hide-menu">Game Categories</span>
+                                <span class="hide-menu">Manage Categories</span>
                             </a>
                         </li>
-                        
-                         -->
+
+                        <li>
+                            <a class="waves-effect waves-dark" href="manage-sub-categories" aria-expanded="false">
+                                <i class="mdi mdi-baby text-success"></i>
+                                <span class="hide-menu">Sub Categories</span>
+                            </a>
+                        </li>
 
                         <li>
                             <a class="waves-effect waves-dark" href="logout" aria-expanded="false">

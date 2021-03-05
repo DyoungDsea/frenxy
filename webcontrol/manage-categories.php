@@ -51,7 +51,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                         <div class="d-flex justify-content-end align-items-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                                <li class="breadcrumb-item active">Manage Game Categories </li>
+                                <li class="breadcrumb-item active">Manage Categories </li>
                             </ol>
                         </div>
                     </div>
@@ -105,11 +105,11 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                             <tbody id="myDIV">
                                             <?php 
                                     
-                                                $sqls=$conn->query("SELECT * FROM `dgame_categories`  ORDER BY dgame");
+                                                $sqls=$conn->query("SELECT * FROM `dcategory`  ORDER BY dcategory ASC");
                                                 $total_records =$sqls->num_rows;
                                                 $total_no_of_pages = ceil($total_records / $total_records_per_page);
                                                 $start_from = ($page_no - 1) * $total_records_per_page;
-                                                $c = $conn->query("SELECT * FROM `dgame_categories` ORDER BY dgame DESC LIMIT $start_from, $total_records_per_page");
+                                                $c = $conn->query("SELECT * FROM `dcategory` ORDER BY dcategory ASC LIMIT $start_from, $total_records_per_page");
                                     
                                                 if($c->num_rows>0){
                                                     $num = 1;
@@ -125,7 +125,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#max<?php echo $row['id']; ?>" href="#">Edit Category</a>
-                                                                <a class="dropdown-item" id="catDelete" user="<?php echo $row['category_id']; ?>" href="#">Delete</a>
+                                                                <a class="dropdown-item" id="catDelete" user="<?php echo $row['cid']; ?>" href="#">Delete</a>
                                                                 
 
                                                             </div>
@@ -209,12 +209,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                 <label for="cat">Category</label>
                                 <input type="text" name="cat" id="cat" required placeholder="Enter Category" class="form-control">
                             </div>
-                            <div class="form-group">
-                                <!-- <label for="cat2">Category Fees</label> -->
-                                <input type="hidden" name="catf" id="cat2" required placeholder="Enter Category Fees" class="form-control">
-                            </div>
-
-                           
+                          
                     </div><!-- End .modal-body -->
                     <div class="modal-footer">
                     <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">Close</button>
@@ -227,7 +222,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
 
 <?php
 
-    $x = $conn->query("SELECT * FROM `dgame_categories` WHERE dstatus='active' ORDER BY dcategory");
+    $x = $conn->query("SELECT * FROM `dcategory` ORDER BY dcategory");
     if($x->num_rows>0):
         while($xx = $x->fetch_assoc()): ?>
     <div class="modal fade" id="max<?php echo $xx['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
@@ -241,17 +236,13 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                         </button>
                     </div><!-- End .modal-header -->
                     <div class="modal-body">
+
                             <div class="form-group">
                                 <label for="cat">Category</label>
                                 <input type="text" name="cat" id="cat" value="<?php echo $xx['dcategory']; ?>" required placeholder="Enter Category" class="form-control">
-                                <input type="hidden" name="hid"  value="<?php echo $xx['category_id']; ?>">
+                                <input type="hidden" name="hid"  value="<?php echo $xx['cid']; ?>">
                             </div>
-                            <div class="form-group">
-                                <!-- <label for="cat2">Category Fees</label> -->
-                                <input type="hidden" name="catf" id="cat2"  value="<?php echo $xx['dfee']; ?>" required placeholder="Enter Category Fees" class="form-control">
-                            </div>
-                           
-
+                            
                     </div><!-- End .modal-body -->
                     <div class="modal-footer">
                     <button type="button" class="btn btn-link btn-sm" data-dismiss="modal">Close</button>

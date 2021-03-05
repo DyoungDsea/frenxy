@@ -22,12 +22,17 @@ $(document).ready(function(){
         magicFunction('Delete for me?', 'ajax-success', 'subDelete', cid, 'Deleted');
     })
 
-    $(document).on("click","#gameDelete", function(){
+    $(document).on("click","#postDelete", function(){
         var cid = $(this).attr("user");
-        magicFunction('Delete for me?', 'ajax-success', 'gameDelete', cid, 'Deleted');
+        magicFunction('Delete for me?', 'ajax-success', 'postDelete', cid, 'Deleted');
     })
 
-    //sure
+    $(document).on("click","#confirmPost", function(){
+        var cid = $(this).attr("user");
+        magicFunction('Confirm for me?', 'ajax-success', 'confirmPost', cid, 'Confirmed');
+    })
+
+    //sure 
     $(document).on("click","#gameSureOpen", function(){
         var cid = $(this).attr("user");
         magicFunction('Open for me?', 'ajax-success', 'gameSureOpen', cid, 'Confirmed');
@@ -75,7 +80,7 @@ $(document).ready(function(){
         var i = $(this).attr('index');
         // console.log(value);
         if(value !=""){
-            fireDataForMe("category-search", "Sub", value, "#subs"+i);
+            fireDataForMe("category-search", "Sub", value, "#sub"+i);
         }        
     }); 
     
@@ -88,10 +93,9 @@ $(function() {
     var currentValue = $('.update option:selected'), i=1;
     currentValue.each(function(){
         var value = $(this).val();
-        var gid = $(this).attr("gid");
-
+        var gid = $(this).attr("pid");
         if(value !=""){
-            fireDataForMe("category-search", "Subs", value, "#subs"+i++, gid);
+            fireDataForMe("category-search", "Subs", value, "#sub"+i++, gid);
         }
      });
 });

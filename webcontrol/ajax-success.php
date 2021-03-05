@@ -34,16 +34,19 @@ if(isset($_POST['Message']) AND $_POST['Message']=="UnBan"){
 
 
 if(isset($_POST['Message']) AND $_POST['Message']=="catDelete"):
-    deleteForMe(clean($_POST['id']), 'dgame_categories', 'category_id');// id, tablename, tableRowID
+    deleteForMe(clean($_POST['id']), 'dcategory', 'cid');// id, tablename, tableRowID
 endif;
 
 if(isset($_POST['Message']) AND $_POST['Message']=="subDelete"):
     deleteForMe(clean($_POST['id']), 'dsubscription', 'subid');
 endif;
 
-if(isset($_POST['Message']) AND $_POST['Message']=="gameDelete"):
-    deleteForMe(clean($_POST['id']), 'dgame', 'gid');
-    deleteForMe(clean($_POST['id']), 'dgame_date', 'gid');
+if(isset($_POST['Message']) AND $_POST['Message']=="postDelete"):
+    deleteForMe(clean($_POST['id']), 'dpost', 'pid');
+endif;
+
+if(isset($_POST['Message']) AND $_POST['Message']=="confirmPost"):
+    updateSingleForMe('dpost', 'dstatus', 'active', 'pid', clean($_POST['id']));
 endif;
 
 if(isset($_POST['Message']) AND $_POST['Message']=="gameWon"):

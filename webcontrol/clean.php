@@ -49,4 +49,13 @@ function clean($value){
   return $date;
   }
 
+  function limitText($text,$limit){
+    if(str_word_count($text, 0)>$limit){
+        $word = str_word_count($text,2);
+        $pos=array_keys($word);
+        $text=substr($text,0,$pos[$limit]). '...';
+    }
+    return $text;
+}
+
   $_SESSION['current_page'] = $_SERVER['REQUEST_URI']; //get the current url link

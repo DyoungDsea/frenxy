@@ -99,7 +99,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                             <tbody id="myDIV">
                                             <?php 
                                                 
-                                                $sql = runQuery("SELECT * FROM `dbanner` ORDER BY id DESC");
+                                                $sql = runQuery("SELECT * FROM `dbanner` ORDER BY id ASC");
                                     
                                                 if($sql->num_rows>0){
                                                     $num = 1;
@@ -234,7 +234,7 @@ if($x->num_rows>0): $xp=$q=1;
                         <input type="text" name="url" id="cats" value="<?php echo $xx['durl']; ?>" required placeholder="Enter Banner URL" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="file" name="img" required class="form-control-file">
+                        <input type="file" name="img"  class="form-control-file">
                     </div>
 
                 </div><!-- End .modal-body -->

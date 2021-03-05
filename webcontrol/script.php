@@ -27,6 +27,7 @@
     <!-- <script src="dist/js/pages/toastr.js"></script> -->
     <script src="app.js"></script>
     <script src="dist/sweetalert.js"></script>
+    <script src="../ckeditor/ckeditor.js"></script>
 
 
 <div id="clickme"></div>

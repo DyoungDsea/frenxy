@@ -63,7 +63,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                     } else {
                         $page_no = 1;
                         } 
-                        $total_records_per_page = 10;
+                        $total_records_per_page = 20;
 
                         ?>
 
@@ -97,32 +97,39 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                             <table class="table table-hover">
                                             <thead>
                                                 <tr>
+                                                    <th>Image</th>
                                                     <th>Date</th>
+                                                    <th>Post By</th>
                                                     <th>Author</th>
                                                     <th>Title</th>
                                                     <th>Category</th>
                                                     <th>Description</th>
+                                                    <th>Status</th>
                                                     <th>---</th>
                                                 </tr>
                                             </thead>
                                             <tbody id="myDIV">
                                             <?php 
                                     
-                                                $sqls=$conn->query("SELECT * FROM `dpost` ORDER BY id DESC");
+                                                $sqls=$conn->query("SELECT * FROM `dpost` ORDER BY dstatus DESC");
                                                 $total_records =$sqls->num_rows;
                                                 $total_no_of_pages = ceil($total_records / $total_records_per_page);
                                                 $start_from = ($page_no - 1) * $total_records_per_page;
-                                                $c = $conn->query("SELECT * FROM `dpost` ORDER BY id DESC LIMIT  $total_records_per_page");
+                                                $c = $conn->query("SELECT * FROM `dpost` ORDER BY dstatus DESC LIMIT $start_from, $total_records_per_page");
                                     
                                                 if($c->num_rows>0){
                                                     $num = 1;
                                                     while($row=$c->fetch_assoc()):?>
                                                     <tr>
-                                                        <td><?php echo formatDateTime($row['ddate']) ?></td>
+                                                    
+                                                        <td> <img style="max-width: 40px;" src="../cover/<?php echo $row['dimg']; ?>" alt=""> </td>
+                                                        <td><?php echo formatDate($row['ddate']) ?></td>
+                                                        <td><?php echo $row['post_by']; ?></td>
                                                         <td><?php echo $row['dname']; ?></td>
                                                         <td><?php echo $row['dtitle']; ?></td>
                                                         <td><?php echo $row['dcategory']; ?></td>
-                                                        <td><?php echo $row['ddesc']; ?></td>
+                                                        <td><?php echo limitText($row['ddesc'],10); ?></td>
+                                                        <td><?php echo $row['dstatus']; ?></td>
                                                         
                                                         <td>
 
@@ -132,7 +139,8 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#max<?php echo $row['id']; ?>" href="#">Edit Post</a>
-                                                                <a class="dropdown-item" id="gameDelete" user="<?php echo $row['gid']; ?>" href="#">Delete Post</a>
+                                                                <a class="dropdown-item" id="confirmPost" user="<?php echo $row['pid']; ?>" href="#">Confirm Post</a>
+                                                                <a class="dropdown-item" id="postDelete" user="<?php echo $row['pid']; ?>" href="#">Delete Post</a>
                                                                 
 
                                                             </div>
@@ -164,17 +172,17 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                             <ul class="pagination pagination-md justify-content-center">
             
                                 <?php 
-                                // if(isset($_GET['search']) AND !empty($_GET['search'])){
-                                //     for ($counter = 1; $counter <= $total_no_of_pages; $counter++){ 
-                                //         echo "<li  class='page-item '><a class='page-link' href='manage-categories?page_no=$counter&search=$search' style='color:#0088cc;'>$counter</a></li>"; 
+                                if(isset($_GET['search']) AND !empty($_GET['search'])){
+                                    for ($counter = 1; $counter <= $total_no_of_pages; $counter++){ 
+                                        echo "<li  class='page-item '><a class='page-link' href='manage-categories?page_no=$counter&search=$search' style='color:#0088cc;'>$counter</a></li>"; 
                                     
-                                //     }
-                                // }else{
-                                //     for ($counter = 1; $counter <= $total_no_of_pages; $counter++){ 
-                                //         echo "<li  class='page-item '><a class='page-link' href='?page_no=$counter' style='color:#0088cc;'>$counter</a></li>"; 
+                                    }
+                                }else{
+                                    for ($counter = 1; $counter <= $total_no_of_pages; $counter++){ 
+                                        echo "<li  class='page-item '><a class='page-link' href='?page_no=$counter' style='color:#0088cc;'>$counter</a></li>"; 
                                     
-                                //     }
-                                // }
+                                    }
+                                }
                             
                                 ?>
                                 </ul>
@@ -204,110 +212,87 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="max-width:550px;">
             <div class="modal-content">
-                <form action="add-game-process" method="post">
+                <form action="post-process" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="addressModalLabel">New Game</h3>
+                        <h3 class="modal-title" id="addressModalLabel">New Post</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
                     </div><!-- End .modal-header -->
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-md-6">
+                        <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" name="author" id="cats" required placeholder="Enter Author" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" name="title" id="catx" required placeholder="Enter Title" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <select name="category" id="catego" class="form-control">
                                         <option value="">Choose Category</option>
                                         <?php
-                                        $boos = $conn->query("SELECT * FROM dpost_categories");
+                                        $boos = $conn->query("SELECT * FROM dcategory");
                                         if($boos->num_rows>0){
                                             while($boox=$boos->fetch_assoc()){
                                         ?>
-                                        <option value="<?php echo $boox['category_id']; ?>"><?php echo $boox['dcategory']; ?></option>
+                                        <option value="<?php echo $boox['cid']; ?>"><?php echo $boox['dcategory']; ?></option>
                                         <?php } } ?>
                                         
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="gtip" id="" class="form-control">
-                                        <option value="">Tip Category</option>
-                                        <option value="Daily">Daily Tip </option>
-                                        <option value="VIP">VIP Tip </option>                                        
-                                        <option value="Sure">Sure Tip </option>                                        
-                                        
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cats">Home</label>
-                                    <input type="text" name="home" id="cats" required placeholder="Enter Home" class="form-control">
-                                </div>
-                            </div>
+                            <div class="col-md-12" id="sub" > </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="catx">Away</label>
-                                    <input type="text" name="away" id="catx" required placeholder="Enter Away" class="form-control">
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <!-- <select name="tip" id="" class="form-control">
-                                        <option value="">Choose Tip</option>
-                                        <option value="Home">Home Win </option>
-                                        <option value="Away">Away Win </option>                                        
-                                        <option value="Draw">Draw </option>
-                                    </select> -->
-                                    <input type="text" name="tip" id="" required placeholder="Enter Tips here..." class="form-control">
-
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="percent" id="" class="form-control">
-                                        <option value="">Choose Probability</option>
-                                        <?php for($i=1; $i<=100; $i++){?>
-                                        <option value="<?php echo $i; ?>"><?php echo $i; ?>%</option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">                                    
-                                    <input type="text" name="tour" id="" required placeholder="Enter Tournament here..." class="form-control">
-
+                                <select name="type" id="" class="form-control" required>
+                                    <option value="">Choose Post Type</option>
+                                    <option value="feature">Feature Post</option>
+                                    <option value="latest">Latest Post</option>
+                                </select>
                                 </div>
-                            </div> -->
+                            </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="tour" id="sub" class="form-control">
-                                        <option value="">Choose Tournament</option>
-                                    </select>
-                                  
+
+                            <div class="col-md-12">
+                                <div class="form-group">                                    
+                                    <textarea name="desc" id="" cols="30" rows="10" class="ckeditor form-control"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">                                    
+                                    <input type="text" name="video" value="" placeholder="Video Url(Optional)" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">                                    
-                                    <input type="text" name="date" id="" title="Use this format for Date : 2020-01-23 " required placeholder="Date eg 2020-01-23  " class="form-control">
-
+                                    <input type="text" name="by" required value="Admin" placeholder="Post By" class="form-control">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">                                    
-                                    <input type="text" name="time" id="" title="Use this format for Time: 13:55:00" required placeholder="Time eg 13:55:00 " class="form-control">
+                                    <input type="text" name="date" id="" title="Use this format for Date : 2020-01-23 " required placeholder="Published Date eg 2020-01-23  " class="form-control">
                                 </div>
                             </div>
+                          
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                <label for=""> Cover Photo </label>                                    
+                                    <input type="file" name="img" required class="form-control-file">
+                                </div>
+                            </div>
+
 
                         </div>
                            
@@ -325,13 +310,13 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
 
 <?php
 
-    $x = $conn->query("SELECT * FROM `dpost` WHERE dresult='pending' ORDER BY id DESC LIMIT $total_records_per_page");
+    $x = $conn->query("SELECT * FROM `dpost`  ORDER BY id DESC LIMIT $total_records_per_page");
     if($x->num_rows>0): $xp=$q=1;
         while($xx = $x->fetch_assoc()): ?>
     <div class="modal fade" id="max<?php echo $xx['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="max-width:550px;">
             <div class="modal-content">
-                <form action="add-game-process" method="post">
+                <form action="post-process" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h3 class="modal-title" id="addressModalLabel">Update Game</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -339,89 +324,83 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                         </button>
                     </div><!-- End .modal-header -->
                     <div class="modal-body">
-                           <input type="hidden" name="pi" value="<?php echo $xx['gid']; ?>">
-                    <div class="row">
-                            <div class="col-md-6">
+                           <input type="hidden" name="pi" value="<?php echo $xx['pid']; ?>">
+                           <div class="row">
+
+                        <div class="col-md-12">
                                 <div class="form-group">
-                                    <select name="category" id="update" index="<?php echo $q++; ?>" class="form-control update">
+                                    <input type="text" name="author"  value="<?php echo $xx['dname']; ?>" id="cats" required placeholder="Enter Author" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" name="title" value="<?php echo $xx['dtitle']; ?>" id="catx" required placeholder="Enter Title" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <select name="category" id="update" index="<?php echo $q++; ?>"  class="form-control update">
                                         <option value="">Choose Category</option>
                                         <?php
-                                        $boos = $conn->query("SELECT * FROM dpost_categories");
+                                        $boos = $conn->query("SELECT * FROM dcategory");
                                         if($boos->num_rows>0){
                                             while($boox=$boos->fetch_assoc()){
                                         ?>
-                                        <option <?php if($xx['dcategory_id']==$boox['category_id']) echo 'selected'; ?> gid="<?php echo $xx['gid']; ?>"  value="<?php echo $boox['category_id']; ?>"><?php echo $boox['dcategory']; ?></option>
+                                        <option <?php if($xx['dcategory']==$boox['dcategory']) echo "selected"; ?> value="<?php echo $boox['cid']; ?>" pid="<?php echo $xx['pid']; ?>"><?php echo $boox['dcategory']; ?></option>
                                         <?php } } ?>
                                         
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="gtip" id="" class="form-control">
-                                        <option value="">Tip Category</option>
-                                        <option <?php if($xx['tipcategory']=='Daily') echo 'selected'; ?> value="Daily">Daily Tip </option>
-                                        <option <?php if($xx['tipcategory']=='VIP') echo 'selected'; ?> value="VIP">VIP Tip </option>                                        
-                                        <option <?php if($xx['tipcategory']=='Sure') echo 'selected'; ?> value="Sure">Sure Tip </option>                                        
-                                        
-                                    </select>
-                                </div>
-                            </div>
+                            
+                            <?php //if(!is_null($xx['dsub_cat'])){ ?>
+                            <div class="col-md-12" id="sub<?php echo $xp++ ?>" > <input type="hidden" name="sub" value=""> </div>
+                            <?php //} ?>
 
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="cats">Home</label>
-                                    <input type="text" name="home" id="cats" value="<?php echo $xx['dhome']; ?>" required placeholder="Enter Home" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="catx">Away</label>
-                                    <input type="text" name="away" id="catx" value="<?php echo $xx['daway']; ?>" required placeholder="Enter Away" class="form-control">
+                            <div class="col-md-12">
+                                <div class="form-group">                                    
+                                <select name="type" id="" class="form-control" required>
+                                    <option  value="">Choose Post Type</option>
+                                    <option <?php if($xx['dtype']=="feature") echo "selected"; ?> value="feature">Feature Post</option>
+                                    <option <?php if($xx['dtype']=="latest") echo "selected"; ?> value="latest">Latest Post</option>
+                                </select>
                                 </div>
                             </div>
 
 
+                            <div class="col-md-12">
+                                <div class="form-group">                                    
+                                    <textarea name="desc" id="" cols="30" rows="10" class="ckeditor form-control">
+                                        <?php echo $xx['ddesc']; ?>
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">                                    
+                                    <input type="text" name="video" value="<?php echo $xx['vurl']; ?>" placeholder="Video Url(Optional)" class="form-control">
+                                </div>
+                            </div>
+                            
+                           
                             <div class="col-md-6">
                                 <div class="form-group">                                    
-                                    <input type="text" name="tip" value="<?php echo $xx['dtip']; ?>" id="" required placeholder="Enter Tips here..." class="form-control">
+                                    <input type="text" name="by" value="<?php echo $xx['post_by']; ?>" required value="Admin" placeholder="Post By" class="form-control">
                                 </div>
                             </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="percent" id="" class="form-control">
-                                        <option value="">Choose Probability</option>
-                                        <?php for($i=1; $i<=100; $i++){?>
-                                        <option <?php if($xx['dpercent']== $i) echo 'selected'; ?> value="<?php echo $i; ?>"><?php echo $i; ?>%</option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <select name="tour" id="subs<?php echo $xp++; ?>" class="form-control">
-                                        <option value="">Choose Tournament</option>
-                                    </select>
-                                  
-                                </div>
-                            </div>
-
-
-
                             <div class="col-md-6">
                                 <div class="form-group">                                    
-                                    <input type="text" name="date" id="" value="<?php echo date("Y-m-d",strtotime($xx['ddate'])); ?>" title="Use this format for Date : 2020-01-23 " required placeholder="Date eg 2020-01-23  " class="form-control">
-
+                                    <input type="text" name="date" value="<?php echo $xx['ddate']; ?>" id="" title="Use this format for Date : 2020-01-23 " required placeholder="Published Date eg 2020-01-23  " class="form-control">
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-group">                                    
-                                    <input type="text" name="time" id="" value="<?php echo date("H:i:s",strtotime($xx['ddate'])); ?>" title="Use this format for Time: 13:55:00" required placeholder="Time eg 13:55:00" class="form-control">
+                           
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                <label for=""> Cover Photo(Optional) </label>                                    
+                                    <input type="file" name="img"  class="form-control-file">
+                                    <input type="hidden" name="himg" value="<?php echo $xx['dimg']; ?>">
                                 </div>
                             </div>
 

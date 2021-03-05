@@ -18,7 +18,7 @@
                 <div class="row">
                     <div class="col-lg-12 align-self-center">
                     <?php 
-                        $sql = runQuery("SELECT * FROM dbanner WHERE dpost='Home'");
+                        $sql = runQuery("SELECT * FROM dbanner WHERE dpost='Home' AND id=1");
                         if($sql->num_rows>0){
                             $img = fetchAssoc($sql);
                      ?>
@@ -53,18 +53,24 @@
                         <div class="carausel-post-1 hover-up border-radius-10 overflow-hidden transition-normal position-relative wow fadeInUp animated">
                             <div class="arrow-cover"></div>
                             <div class="slide-fade">
+                                <?php 
+                                $post = runQuery("SELECT * FROM dpost WHERE dstatus='active' ORDER BY RAND() LIMIT 5");
 
+                                if($post->num_rows>0){
+                                    while($posts = fetchAssoc($post)):
+                                
+                                ?>
                                 <div class="position-relative post-thumb">
                                     <div class="thumb-overlay img-hover-slide position-relative" style="background-image: url(assets/imgs/news/news-4.jpg)">
-                                        <a class="img-link" href="single.html"></a>
+                                        <a class="img-link" href="read-article?post=<?php echo $posts['pid'] ?>"></a>
                                         <span class="top-left-icon bg-warning"><i class="elegant-icon icon_star_alt"></i></span>
                                         <div class="post-content-overlay text-white ml-30 mr-30 pb-30">
                                             <div class="entry-meta meta-0 font-small mb-20">
-                                                <a href="category.html"><span class="post-cat text-info text-uppercase">Travel</span></a>
-                                                <a href="category.html"><span class="post-cat text-success text-uppercase">Animal</span></a>
+                                                <a href="category"><span class="post-cat text-info text-uppercase"><?php echo $posts['dcategory'] ?></span></a>
+                                                <a href="category"><span class="post-cat text-success text-uppercase"><?php echo $posts['dsub_cat'] ?></span></a>
                                             </div>
                                             <h3 class="post-title font-weight-900 mb-20">
-                                                <a class="text-white" href="single.html">Beachmaster Elephant Seal Fights off Rival Male, The match is uncompromising</a>
+                                                <a class="text-white" href="read-article?post=<?php echo $posts['pid'] ?>"><?php echo $posts['dtitle'] ?></a>
                                             </h3>
                                             <div class="entry-meta meta-1 font-small text-white mt-10 pr-5 pl-5">
                                                 <span class="post-on">20 minutes ago</span>
@@ -74,7 +80,9 @@
                                     </div>
                                 </div>
 
-                                <div class="position-relative post-thumb">
+                                <?php endwhile; } ?>
+
+                                <!-- <div class="position-relative post-thumb">
                                     <div class="thumb-overlay img-hover-slide position-relative" style="background-image: url(assets/imgs/news/news-6.jpg)">
                                         <a class="img-link" href="single.html"></a>
                                         <span class="top-left-icon bg-danger"><i class="elegant-icon icon_image"></i></span>
@@ -91,8 +99,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
+                                </div> -->
+
                             </div>
                         </div>
                     </div>
