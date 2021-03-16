@@ -1,4 +1,4 @@
-<?php include 'webcontrol/clean.php'; ?>
+<?php include 'webcontrol/clean.php'; include 'functions.php' ?>
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>

@@ -100,6 +100,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                     <th>#</th>
                                                     <th>Categories</th>
                                                     <th>Sub Category</th>
+                                                    <th>Date</th>
                                                     <th>---</th>
                                                 </tr>
                                             </thead>
@@ -121,7 +122,8 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                         <td><?php echo $row['dsub_cat']; ?></td>
                                                         <td><?php echo formatDate($row['ddate']); ?></td>
                                                         <td>
-                                                            <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#max<?php echo $row['id']; ?>" href="#"> <i class="icon-note"></i> Edit</a> 
+                                                            <a class="btn btn-sm btn-info" data-toggle="modal" data-target="#max<?php echo $row['id']; ?>" href="#"> <i class="icon-note"></i> Edit</a> 
+                                                            <a class="btn btn-sm btn-danger" id="subDelete" data-id="<?php echo $row['sid']; ?>" href="#"> <i class="icon-trash"></i> Delete</a> 
                                                         </td>
                                                     </tr>
                                                     <?php endwhile;  }else{
@@ -200,7 +202,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                     <select name="category" required id="catx" class="form-control">
                                         <option value="">Choose Category</option>
                                         <?php
-                                        $boos = $conn->query("SELECT * FROM dcategory");
+                                        $boos = $conn->query("SELECT * FROM dcategory ORDER BY dcategory ASC");
                                         if($boos->num_rows>0){
                                             while($boox=$boos->fetch_assoc()){
                                         ?>
@@ -250,7 +252,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                     <select name="category" required id="catx" class="form-control">
                                         <option value="">Choose Category</option>
                                         <?php
-                                        $boos = $conn->query("SELECT * FROM dcategory");
+                                        $boos = $conn->query("SELECT * FROM dcategory ORDER BY dcategory ASC");
                                         if($boos->num_rows>0){
                                             while($boox=$boos->fetch_assoc()){
                                         ?>

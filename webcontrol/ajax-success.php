@@ -35,10 +35,11 @@ if(isset($_POST['Message']) AND $_POST['Message']=="UnBan"){
 
 if(isset($_POST['Message']) AND $_POST['Message']=="catDelete"):
     deleteForMe(clean($_POST['id']), 'dcategory', 'cid');// id, tablename, tableRowID
+    deleteForMe(clean($_POST['id']), 'dsub_cat', 'dcategory_id');// id, tablename, tableRowID
 endif;
 
 if(isset($_POST['Message']) AND $_POST['Message']=="subDelete"):
-    deleteForMe(clean($_POST['id']), 'dsubscription', 'subid');
+    deleteForMe(clean($_POST['id']), 'dsub_cat', 'sid');
 endif;
 
 if(isset($_POST['Message']) AND $_POST['Message']=="postDelete"):

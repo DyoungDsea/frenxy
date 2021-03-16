@@ -100,6 +100,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                     <th>Image</th>
                                                     <th>Date</th>
                                                     <th>Post By</th>
+                                                    <th>Type</th>
                                                     <th>Author</th>
                                                     <th>Title</th>
                                                     <th>Category</th>
@@ -125,8 +126,9 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                         <td> <img style="max-width: 40px;" src="../cover/<?php echo $row['dimg']; ?>" alt=""> </td>
                                                         <td><?php echo formatDate($row['ddate']) ?></td>
                                                         <td><?php echo $row['post_by']; ?></td>
+                                                        <td><?php echo $row['dtype']; ?></td>
                                                         <td><?php echo $row['dname']; ?></td>
-                                                        <td><?php echo $row['dtitle']; ?></td>
+                                                        <td><?php echo limitText($row['dtitle'],5); ?></td>
                                                         <td><?php echo $row['dcategory']; ?></td>
                                                         <td><?php echo limitText($row['ddesc'],10); ?></td>
                                                         <td><?php echo $row['dstatus']; ?></td>

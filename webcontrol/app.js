@@ -18,7 +18,7 @@ $(document).ready(function(){
     })
 
     $(document).on("click","#subDelete", function(){
-        var cid = $(this).attr("user");
+        var cid = $(this).attr("data-id");
         magicFunction('Delete for me?', 'ajax-success', 'subDelete', cid, 'Deleted');
     })
 

@@ -10,7 +10,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
     $title = clean($_POST['title']);
     $type = clean($_POST['type']);
     $by = clean($_POST['by']);
-    $desc = $_POST['desc'];
+    // $desc = $_POST['desc'];
+    $desc = $conn->real_escape_string($_POST['desc']);
     $date = date("Y-m-d", strtotime(clean($_POST['date'])));
     $sub = !empty($_POST['sub'])? clean($_POST['sub']): NULL;
     $video = !empty($_POST['video'])? clean($_POST['video']): NULL;

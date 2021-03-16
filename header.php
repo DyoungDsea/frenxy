@@ -42,17 +42,26 @@
                         <ul class="main-menu d-none d-lg-inline font-small">
                             <li> <a href="home">Home</a> </li>
                             
+                            <?php 
+                                $app = runQuery("SELECT * FROM dcategory ORDER BY dcategory ASC LIMIT 7");
+                                if($app->num_rows>0){
+                                    while($apps = fetchAssoc($app)):
+                                        $catId = $apps['cid'];
+                            ?>
 
                             <li class="menu-item-has-children">
-                                <a href="index.html"> Topics</a>
+                                <a href="#category"> <?php echo $apps['dcategory']; ?> </a>
                                 <ul class="sub-menu text-muted font-small">
-                                    <li><a href="index.html">Home default</a></li>
-                                    <li><a href="home-2.html">Homepage 2</a></li>
-                                    <li><a href="home-3.html">Homepage 3</a></li>
+                                <?php $sub = runQuery("SELECT * FROM dsub_cat WHERE dcategory_id='$catId' ORDER BY dsub_cat ASC");
+                                if($sub->num_rows>0){
+                                    while($rod=fetchAssoc($sub)):?>
+                                    <li><a href="#"><?php echo $rod['dsub_cat']; ?></a></li>
+                                    <?php endwhile; } ?>
                                 </ul>
                             </li>
+                            <?php endwhile; } ?>
 
-                            <li class="menu-item-has-children">
+                            <!-- <li class="menu-item-has-children">
                                 <a href="index.html"> Writers</a>
                                 <ul class="sub-menu text-muted font-small">
                                     <li><a href="index.html">Home default</a></li>
@@ -62,7 +71,7 @@
                             </li>
 
                             <li> <a href="posdcast">Podcast</a> </li>
-                            <li> <a href="events">Events</a> </li>
+                            <li> <a href="events">Events</a> </li> -->
                         </ul>
 
                         <!--Mobile menu-->
