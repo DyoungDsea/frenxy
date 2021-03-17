@@ -125,7 +125,7 @@
         </div>
 
 
-        <!-- <section class="pt-50 pb-50">
+        <section class="pt-50 pb-50">
             <div class="container" >
                 <h3>NEW BOOK RELEASE FOR THE WEEK</h3>
                 <div class="mhn-slide owl-carousel">
@@ -217,7 +217,7 @@
             </div>
 
 
-        </section> -->
+        </section>
 
 
 
@@ -357,6 +357,22 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="featured-1" style="background:white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 align-self-center">
+                    <?php 
+                        $sql = runQuery("SELECT * FROM dbanner WHERE dpost='Home' AND id=2");
+                        if($sql->num_rows>0){
+                            $img = fetchAssoc($sql);
+                     ?>
+                         <a href="<?php echo $img['durl']; ?>"><img src="banner/<?php echo $img['dimg']; ?>" alt=""></a>  
+                        <?php } ?>                   
                     </div>
                 </div>
             </div>

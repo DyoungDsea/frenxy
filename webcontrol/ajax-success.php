@@ -50,6 +50,10 @@ if(isset($_POST['Message']) AND $_POST['Message']=="confirmPost"):
     updateSingleForMe('dpost', 'dstatus', 'active', 'pid', clean($_POST['id']));
 endif;
 
+if(isset($_POST['Message']) AND $_POST['Message']=="disConfirmPost"):
+    updateSingleForMe('dpost', 'dstatus', 'inactive', 'pid', clean($_POST['id']));
+endif;
+
 if(isset($_POST['Message']) AND $_POST['Message']=="gameWon"):
     updateForMe(clean($_POST['id']), 'won', 'B');
     updateGame(clean($_POST['id']));

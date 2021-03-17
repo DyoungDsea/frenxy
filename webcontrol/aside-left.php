@@ -105,12 +105,12 @@
                             </ul>
                         </li> -->
 
-                        <!-- <li>
-                            <a class="waves-effect waves-dark" href="suretip" aria-expanded="false">
+                        <li>
+                            <a class="waves-effect waves-dark" href="gallery" aria-expanded="false">
                                 <i class="mdi mdi-baby text-success"></i>
-                                <span class="hide-menu"> Sure Tip</span>
+                                <span class="hide-menu">Manage Gallery</span>
                             </a>
-                        </li> -->
+                        </li>
                         
                         <!-- <li>
                             <a class="waves-effect waves-dark" href="subscriptions" aria-expanded="false">

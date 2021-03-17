@@ -29,7 +29,12 @@ $(document).ready(function(){
 
     $(document).on("click","#confirmPost", function(){
         var cid = $(this).attr("user");
-        magicFunction('Confirm for me?', 'ajax-success', 'confirmPost', cid, 'Confirmed');
+        magicFunction('Enable for me?', 'ajax-success', 'confirmPost', cid, 'Enabled!');
+    })
+
+    $(document).on("click","#disConfirmPost", function(){
+        var cid = $(this).attr("user");
+        magicFunction('Disable for me?', 'ajax-success', 'disConfirmPost', cid, 'Disabled!');
     })
 
     //sure 

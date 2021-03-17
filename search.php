@@ -32,7 +32,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="row mt-80">
+                <!-- <div class="row mt-80">
                     <div class="col-lg-4">
                         <div class="d-flex bg-grey has-border p-25 hover-up-2 transition-normal border-radius-5 mb-30">
                             <div class="post-thumb post-thumb-64 d-flex mr-15 border-radius-5 img-hover-scale overflow-hidden">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

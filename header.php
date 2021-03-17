@@ -4,31 +4,31 @@
             <div class="container">
                 <div class="row pt-20 pb-20">
                     <div class="col-md-3 col-xs-6">
-                        <a href="index.html"><img class="logo" src="assets/imgs/theme/logo.png" alt=""></a>
+                        <a href="home"><img style="max-width:80%" class="logo" src="img/white_.jpeg" alt=""></a>
                     </div>
                     <div class="col-md-9 col-xs-6 text-right header-top-right ">
 
                         <ul class="list-inline nav-topbar d-none d-md-inline">
                             <li class="list-inline-item menu-item-has-children"><a href="#">My Account</a>
                                 <ul class="sub-menu font-small">
-                                <li><a href="page-login.html">Login</a></li>
-                                <li><a href="page-register.html">Register</a></li>
+                                <li><a href="login">Login</a></li>
+                                <li><a href="register">Register</a></li>
                                     
-                                    <li class="menu-item-has-children"><a href="#">Single post</a>
+                                    <!-- <li class="menu-item-has-children"><a href="#">Single post</a>
                                         <ul class="sub-menu font-small">
                                             <li><a href="single.html">Default</a></li>
                                             <li><a href="single-2.html">Big image</a></li>
                                             <li><a href="single-3.html">Left image</a></li>
                                             <li><a href="single-4.html">With sidebar</a></li>
                                         </ul>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </li>
                             
                         </ul>
                         <span class="vertical-divider mr-20 ml-20 d-none d-md-inline"></span>
                         <button class="search-icon d-none d-md-inline"><span class="mr-15 text-muted font-small"><i class="elegant-icon icon_search mr-5"></i>Search</span></button>
-                        <a href="#" class="btn btn-radius bg-primary text-white ml-15 font-small box-shadow">Buy Now</a>
+                        <a href="#" class="btn btn-radius bg-primary text-white ml-15 font-small box-shadow">Online Books</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                             <li> <a href="home">Home</a> </li>
                             
                             <?php 
-                                $app = runQuery("SELECT * FROM dcategory ORDER BY dcategory ASC LIMIT 7");
+                                $app = runQuery("SELECT * FROM dcategory ORDER BY rorder ASC LIMIT 7");
                                 if($app->num_rows>0){
                                     while($apps = fetchAssoc($app)):
                                         $catId = $apps['cid'];

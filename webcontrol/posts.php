@@ -141,7 +141,12 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#max<?php echo $row['id']; ?>" href="#">Edit Post</a>
-                                                                <a class="dropdown-item" id="confirmPost" user="<?php echo $row['pid']; ?>" href="#">Confirm Post</a>
+                                                                <?php if($row['dstatus']=='inactive'){?>
+                                                                <a class="dropdown-item" id="confirmPost" user="<?php echo $row['pid']; ?>" href="#">Enable Post</a>
+                                                                <?php }else{?> 
+                                                                    <a class="dropdown-item" id="disConfirmPost" user="<?php echo $row['pid']; ?>" href="#">Disable Post</a>
+                                                                <?php }  ?>
+
                                                                 <a class="dropdown-item" id="postDelete" user="<?php echo $row['pid']; ?>" href="#">Delete Post</a>
                                                                 
 
@@ -212,7 +217,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
 
 
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="max-width:550px;">
+        <div class="modal-dialog " role="document" style="max-width:550px;">
             <div class="modal-content">
                 <form action="post-process" method="post" enctype="multipart/form-data">
                     <div class="modal-header">

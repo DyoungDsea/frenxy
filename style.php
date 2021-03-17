@@ -1,4 +1,4 @@
-<link rel="shortcut icon" type="image/x-icon" href="assets/imgs/theme/favicon.png">
+<link rel="shortcut icon" type="image/x-icon" href="img/white_.jpeg">
     <!-- NewsBoard CSS  -->
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/widgets.css">
