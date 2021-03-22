@@ -72,9 +72,9 @@
                                             <h3 class="post-title font-weight-900 mb-20">
                                                 <a class="text-white" href="read-article?post=<?php echo $posts['pid'] ?>"><?php echo $posts['dtitle'] ?></a>
                                             </h3>
-                                            <div class="entry-meta meta-1 font-small text-white mt-10 pr-5 pl-5">
-                                                <?php echo totalPostViews($posts['pid']) ?>
-                                            </div>
+                                            <!-- <div class="entry-meta meta-1 font-small text-white mt-10 pr-5 pl-5">
+                                                <?php //echo totalPostViews($posts['pid']) ?>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@
                                     </h5>
                                     <div class="entry-meta meta-1 float-left font-x-small text-uppercase">
                                         <span class="post-on"><?php echo date("d M", strtotime($ones['ddate'])) ?></span>
-                                        <?php echo totalPostViews($ones['pid']) ?>
+                                        <?php //echo totalPostViews($ones['pid']) ?>
                                     </div>
                                 </div>
                             </div>

@@ -118,7 +118,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                     <tr>
                                                     
                                                         <td><?php echo $num++; ?></td>
-                                                        <td> <img style="max-width: 40px;" src="../gallery/<?php echo $row['dimg']; ?>" alt=""> </td>
+                                                        <td> <img style="max-width: 60px;" src="../_gallery/<?php echo $row['dimg']; ?>" alt=""> </td>
                                                         <td><?php echo formatDate($row['ddate']) ?></td>
                                                         
                                                         <td>
@@ -129,11 +129,13 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a class="dropdown-item" data-toggle="modal" data-target="#max<?php echo $row['id']; ?>" href="#">Edit Image</a>
-                                                                <a class="dropdown-item" id="postDelete" user="<?php echo $row['pid']; ?>" href="#">Delete Image</a>
-                                                                
+                                                                <a class="dropdown-item" id="imgDelete" user="<?php echo $row['gid']; ?>" href="#">Delete Image</a>
 
                                                             </div>
                                                         </div>  
+
+                                                        <button id="copy" data-id="<?php echo $row['id']; ?>" data-rtn="copy<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Copy</button>
+                                                        <div id="copy<?php echo $row['id']; ?>" style="display: none;"><img src="../_gallery/<?php echo $row['dimg']; ?>.jpg" alt=""> </div>
 
 
 
@@ -201,7 +203,7 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
         <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
         <div class="modal-dialog " role="document" style="max-width:550px;">
             <div class="modal-content">
-                <form action="post-process" method="post" enctype="multipart/form-data">
+                <form action="gallery-process" method="post" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h3 class="modal-title" id="addressModalLabel">New Image</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -248,9 +250,11 @@ if(!isset($_SESSION['admin']) && $_SESSION['admin'] != true){
                     <div class="modal-body">
                            <input type="hidden" name="pi" value="<?php echo $xx['gid']; ?>">
                            <div class="row">
-
                             <div class="col-md-12">
-                                <div class="form-group">
+                            <div class="box">
+                                <img style="max-width: 100%;" src="../_gallery/<?php echo $xx['dimg']; ?>.jpg" alt=""> 
+                            </div>
+                                <div class="form-group mt-3">
                                 <label for=""> Cover Photo(Optional) </label>                                    
                                     <input type="file" name="img"  class="form-control-file">
                                     <input type="hidden" name="himg" value="<?php echo $xx['dimg']; ?>">

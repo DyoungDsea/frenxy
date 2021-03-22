@@ -17,9 +17,9 @@ $(document).ready(function(){
         magicFunction('Delete for me?', 'ajax-success', 'catDelete', cid, 'Deleted');
     })
 
-    $(document).on("click","#subDelete", function(){
-        var cid = $(this).attr("data-id");
-        magicFunction('Delete for me?', 'ajax-success', 'subDelete', cid, 'Deleted');
+    $(document).on("click","#imgDelete", function(){
+        var cid = $(this).attr("user");
+        magicFunction('Delete for me?', 'ajax-success', 'imgDelete', cid, 'Deleted');
     })
 
     $(document).on("click","#postDelete", function(){
@@ -87,7 +87,16 @@ $(document).ready(function(){
         if(value !=""){
             fireDataForMe("category-search", "Sub", value, "#sub"+i);
         }        
-    }); 
+    });
+    
+    $(document).on("click", "#copy", function(){
+        var id = $(this).attr("data-id");
+        var rtn = $(this).attr("data-rtn");
+        // alert(rtn)
+        // var copy = $("#copy"+id);
+        copyToClipboard("#copy"+id);
+        $("#"+rtn).text("Copied")
+    })
     
     
 
@@ -172,3 +181,30 @@ function fireForMe(dataResult, dataType){
        stack: 6
    })
  }
+
+
+//  function CopyToClipboard(containerid) {
+//     if (document.selection) { 
+//         var range = document.body.createTextRange();
+//         range.moveToElementText(document.getElementById(containerid));
+//         range.select().createTextRange();
+//         document.execCommand("copy"); 
+    
+//     } else if (window.getSelection) {
+//         var range = document.createRange();
+//          range.selectNode(document.getElementById(containerid));
+//          window.getSelection().addRange(range);
+//          document.execCommand("copy");
+//          alert("text copied") 
+//     }}
+
+//Copy to clipboard
+function copyToClipboard(element) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($(element).html()).select();
+    document.execCommand("copy");
+    $temp.remove();
+    // var btn = $(this).attr("title");
+    // rtn.text("Copied");
+  }

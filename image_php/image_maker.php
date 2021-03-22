@@ -6,9 +6,9 @@ if ($foo->uploaded) {
    $foo->file_new_name_body = $picid;
    $foo->image_resize = true;
    $foo->image_convert = 'jpg';
-   $foo->image_x = 400;
+   $foo->image_ratio_x = true;
    $foo->image_ratio_y = true;
-   $foo->Process('_post');
+   $foo->Process('../_gallery');
    if ($foo->processed) {
      $foo->Clean();
    }  

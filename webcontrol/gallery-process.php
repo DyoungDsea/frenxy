@@ -1,30 +1,50 @@
 <?php
 require 'clean.php';
+$id = date("ymdhis").rand(10000, 99999);
+$transid = date("ymdhis");
+include '../image_php/class.upload.php';
 
 if($_SERVER['REQUEST_METHOD']=="POST"){
-    $category = clean($_POST['category']);
-    $home = clean($_POST['home']);
-    $away = clean($_POST['away']);
-    $pi = clean($_POST['pi']);
+   
 
-    if(isset($_POST['logx'])){
-        $sql = $conn->query("UPDATE dgame SET dscore1='$home', dscore2='$away' WHERE gid='$pi' ");
+    if(isset($_POST['log'])){
 
-        if($sql){
-            $_SESSION['msgs']="Updated successfully";
-        }else{
-            $_SESSION['msg']="Oops! try again later";
+        if(!empty($_FILES['img']['name'])){ 
+            insertImages($transid, $id);
         }
-        if($category=='sure'){
-            header("Location: sure-pending");
-        }elseif($category=='suretip'){
-            header("Location: suretip");
-        }else{
-            header("Location: games?category=$category");
+        header("Location: gallery");
+      
+    }elseif(isset($_POST['logx'])){
+
+        $pi = clean($_POST['pi']);
+        $himg = clean($_POST['himg']);
+
+        if(!empty($_FILES['img']['name'])){ 
+            insertImages($transid, $pi, 'yes');
+            @unlink("../_gallery/$himg.jpg");
         }
+        header("Location: gallery");
+      
     }else{
         $_SESSION['msg']="Oops! you don't have access";
         header("Location: dashboard");
     }
 
+}
+
+
+function insertImages($transid, $rowId, $dataBase=Null){
+    @list(, , $imtype, ) = getimagesize($_FILES['img']['tmp_name']); 
+    if ($imtype == 3 or $imtype == 2 or $imtype == 1) {          
+    $picid=$transid.'-1';
+    $foo = new Upload($_FILES['img']);  
+    include("../image_php/image_maker.php"); 
+    if(is_null($dataBase)){
+        runQuery("INSERT INTO dgallery SET dimg='$picid', gid='$rowId', ddate=Now()");
+    }else{
+        runQuery("UPDATE dgallery SET dimg='$picid' WHERE gid='$rowId'");
+    }   
+    // $conn->query("");
+    }
+    
 }
